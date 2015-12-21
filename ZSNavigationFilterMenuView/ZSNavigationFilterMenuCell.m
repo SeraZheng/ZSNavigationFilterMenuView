@@ -14,6 +14,7 @@
 
 @interface ZSNavigationFilterMenuCell ()
 
+@property (nonatomic, retain) CABasicAnimation *shakeAnimation;
 
 @end
 
@@ -58,13 +59,34 @@
 {
     [super setHighlighted:highlighted animated:animated];
     
-    if (highlighted) {
-       [_bodyView setBackgroundColor:RGBCOLOR(29, 120, 191)];
-        [_bodyView.layer setBorderWidth:0.f];
-    } else {
-        [_bodyView setBackgroundColor:[UIColor clearColor]];
-        [_bodyView.layer setBorderWidth:1.f];
+    if (!self.selected) {
+        if (highlighted) {
+            
+            [self.contentView.layer addAnimation:self.shakeAnimation forKey:nil];
+            
+            [_bodyView setBackgroundColor:RGBCOLOR(29, 120, 191)];
+            [_bodyView.layer setBorderWidth:0.f];
+            
+        } else {
+            [_bodyView setBackgroundColor:[UIColor clearColor]];
+            [_bodyView.layer setBorderWidth:1.f];
+        }
     }
+}
+
+- (CABasicAnimation *)shakeAnimation
+{
+    if (!_shakeAnimation) {
+        CGPoint viewPosition = self.contentView.layer.position;
+        _shakeAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+        [_shakeAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionDefault]];
+        [_shakeAnimation setFromValue:[NSValue valueWithCGPoint:CGPointMake(viewPosition.x - 10, viewPosition.y)]];
+        [_shakeAnimation setToValue:[NSValue valueWithCGPoint:CGPointMake(viewPosition.x + 10, viewPosition.y)]];
+        [_shakeAnimation setAutoreverses:YES];
+        [_shakeAnimation setRepeatCount:2];
+        [_shakeAnimation setDuration:0.05];
+    }
+    return _shakeAnimation;
 }
 
 @end

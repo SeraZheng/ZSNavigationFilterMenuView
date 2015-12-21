@@ -18,6 +18,8 @@
 
 @interface ZSNavigationFilterMenuController ()
 
+@property (nonatomic, retain) CABasicAnimation *exitAnimation;
+
 @end
 
 @implementation ZSNavigationFilterMenuController
@@ -59,28 +61,29 @@
     }
     
     if (animate) {
-        NSTimeInterval duration = enable ? Animate_Duration_Show : Animate_Duration_Hide;
-        [UIView animateWithDuration:duration animations:^(){
-            
-            if (enable) {
+        
+        NSTimeInterval duration = enable ? 1 : Animate_Duration_Hide;
+        if (enable) {
+            [UIView animateWithDuration:duration delay:0.f usingSpringWithDamping:0.5 initialSpringVelocity:10 options:UIViewAnimationOptionTransitionFlipFromBottom animations:^(){
+                
                 self.backgroundView.alpha = Alpha;
                 self.tableView.bottom = ZSScreenHeight();
-            } else {
+            } completion:NULL];
+        }
+        else {
+            [UIView animateWithDuration:duration delay:0.f options:UIViewAnimationOptionTransitionFlipFromTop animations:^(){
                 self.backgroundView.alpha = 0;
                 self.tableView.top = ZSScreenHeight();
-            }
-        } completion:^(BOOL finished){
-            if (enable) {
-
-            } else {
+                
+            } completion:^(BOOL finish){
                 [self.tableView removeFromSuperview];
                 [self.backgroundView removeFromSuperview];
                 
                 if ([self.menuDelegate respondsToSelector:@selector(pullDownMenuDidDismiss)]) {
                     [self.menuDelegate pullDownMenuDidDismiss];
                 }
-            }
-        }];
+            }];
+        }
     }
     else {
         if (!enable) {

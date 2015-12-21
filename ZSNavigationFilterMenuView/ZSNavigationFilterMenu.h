@@ -50,7 +50,7 @@
 /**
  *  @brief block for selecting one menu
  */
-@property (nonatomic, copy) void (^changeTitleCompletion)(NSInteger row);
+@property (nonatomic, copy) void (^changeTitleCompletion)(NSString *title, NSInteger row);
 
 - (instancetype)initWithTitle:(NSString *)title;
 

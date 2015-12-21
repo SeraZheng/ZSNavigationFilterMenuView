@@ -11,7 +11,7 @@
 #import "UIViewAdditions.h"
 #import <math.h>
 
-#define kSpace 6
+#define kSpace 9
 #define Image_Height 30
 #define Image_Width 30
 
@@ -69,20 +69,21 @@
 
 - (void)setTitle:(NSString *)title forState:(UIControlState)state
 {
-    CGSize size;
+    NSAttributedString *attributedTitle;
     if (state == UIControlStateNormal) {
-        [self setAttributedTitle:[[NSAttributedString alloc] initWithString:title attributes:self.defaultAttributes] forState:UIControlStateNormal];
+        attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:self.defaultAttributes];
+        [self setAttributedTitle:attributedTitle forState:UIControlStateNormal];
         
-        size = [title boundingRectWithSize:self.maxSize options:NSStringDrawingUsesFontLeading attributes:self.defaultAttributes context:nil].size;
     }
     else if (state == UIControlStateHighlighted) {
-        [self setAttributedTitle:[[NSAttributedString alloc] initWithString:title attributes:self.highlightAttributes] forState:UIControlStateHighlighted];
-        
-        size = [title boundingRectWithSize:self.maxSize options:NSStringDrawingUsesFontLeading attributes:self.highlightAttributes context:nil].size;
+        attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:self.highlightAttributes];
+        [self setAttributedTitle:attributedTitle forState:UIControlStateHighlighted];
     }
     
+    CGSize size = [attributedTitle boundingRectWithSize:self.maxSize options:NSStringDrawingTruncatesLastVisibleLine context:nil].size;
     [self setSize:size];
-    [self setImageEdgeInsets:UIEdgeInsetsMake(Image_Height/2 - size.height/2 , size.width, 0, 0)];
+//    [self setImageEdgeInsets:UIEdgeInsetsMake(Image_Height/2 - size.height/2 , size.width - kSpace, 0, 0)];
+     [self setImageEdgeInsets:UIEdgeInsetsMake(0 , size.width - kSpace + 2, 0, 0)];
 }
 
 - (void)filterTitleTap
@@ -147,7 +148,7 @@
     [self setTitle:[self.titleItems objectAtIndex:row] forState:UIControlStateNormal];
     
     if (NULL != self.changeTitleCompletion) {
-        _changeTitleCompletion(row);
+        _changeTitleCompletion([self.titleItems objectAtIndex:row], row);
     }
 }
 
@@ -165,7 +166,7 @@
         CGContextSetLineWidth(context, 2.f);
         
         CGContextMoveToPoint(context, kSpace, kSpace);
-        CGContextAddLineToPoint(context, Image_Width/2, Image_Width - 2*kSpace);
+        CGContextAddLineToPoint(context, Image_Width/2, Image_Width - kSpace);
         CGContextAddLineToPoint(context, Image_Width - kSpace, kSpace);
         
         CGContextStrokePath(context);
