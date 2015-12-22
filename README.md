@@ -16,7 +16,7 @@ You can import the folder ``"ZSNavigationFilterMenuView"`` to your project.There
 Usage
 ====================================================================================================================================
 >>##Initilize
->>ZSNavigationFilterMenuView provieds only a kind of way to initilize one instance, as following:<br>
+>>ZSNavigationFilterMenuView provieds only a kind of way to initilize one instance, as following.You don't have to care ``ZSNavigationFilterMenuView's frame``, it can be size of its needs<br>
 ```Objective-C
 >>ZSNavigationFilterMenu *filterMenu = [[ZSNavigationFilterMenu alloc] initWithTitle:[titleItems objectAtIndex:0]];
 ```
