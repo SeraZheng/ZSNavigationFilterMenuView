@@ -1,7 +1,7 @@
 # ZSNavigationFilterMenuView
 A kind of ``filter menu`` as ``navigationBar's titleView``, including titles as well as icons. 
 <br>
-![](https://github.com/SeraZheng/ZSNavigationFilterMenuView/blob/master/ScreenShot/displayWithHide.gif)
+![](https://github.com/SeraZheng/ZSNavigationFilterMenuView/blob/master/ScreenShot/displayAndHide.gif)
 ![](https://github.com/SeraZheng/ZSNavigationFilterMenuView/blob/master/ScreenShot/TitlesOnly.gif)
 ![](https://github.com/SeraZheng/ZSNavigationFilterMenuView/blob/master/ScreenShot/Shake.gif)
 <br>
