@@ -19,6 +19,11 @@
 		97DBA01F1C2790650052D375 /* ZSNavigationFilterMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DBA0151C2790650052D375 /* ZSNavigationFilterMenuController.m */; };
 		97DBA0201C2790650052D375 /* ZSDefaultStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DBA0181C2790650052D375 /* ZSDefaultStyleSheet.m */; };
 		97DBA0211C2790650052D375 /* ZSStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 97DBA01B1C2790650052D375 /* ZSStyleSheet.m */; };
+		97DBA0581C28F96D0052D375 /* numbers@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBA0531C28F96D0052D375 /* numbers@2x.png */; };
+		97DBA0591C28F96D0052D375 /* offline_files.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBA0541C28F96D0052D375 /* offline_files.png */; };
+		97DBA05A1C28F96D0052D375 /* ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBA0551C28F96D0052D375 /* ok.png */; };
+		97DBA05B1C28F96D0052D375 /* pages@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBA0561C28F96D0052D375 /* pages@2x.png */; };
+		97DBA05C1C28F96D0052D375 /* pdf@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97DBA0571C28F96D0052D375 /* pdf@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +50,11 @@
 		97DBA0191C2790650052D375 /* ZSGlobalStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSGlobalStyle.h; sourceTree = "<group>"; };
 		97DBA01A1C2790650052D375 /* ZSStyleSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSStyleSheet.h; sourceTree = "<group>"; };
 		97DBA01B1C2790650052D375 /* ZSStyleSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSStyleSheet.m; sourceTree = "<group>"; };
+		97DBA0531C28F96D0052D375 /* numbers@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "numbers@2x.png"; sourceTree = "<group>"; };
+		97DBA0541C28F96D0052D375 /* offline_files.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = offline_files.png; sourceTree = "<group>"; };
+		97DBA0551C28F96D0052D375 /* ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok.png; sourceTree = "<group>"; };
+		97DBA0561C28F96D0052D375 /* pages@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pages@2x.png"; sourceTree = "<group>"; };
+		97DBA0571C28F96D0052D375 /* pdf@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pdf@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +73,7 @@
 			children = (
 				97DBA00C1C2790650052D375 /* ZSNavigationFilterMenuView */,
 				97DB9FE81C278F8E0052D375 /* ZSNavigationFilterMenuViewDemo */,
+				97DBA0521C28F96D0052D375 /* Resource */,
 				97DB9FE71C278F8E0052D375 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -135,6 +146,18 @@
 			path = ZSStyleSheet;
 			sourceTree = "<group>";
 		};
+		97DBA0521C28F96D0052D375 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				97DBA0531C28F96D0052D375 /* numbers@2x.png */,
+				97DBA0541C28F96D0052D375 /* offline_files.png */,
+				97DBA0551C28F96D0052D375 /* ok.png */,
+				97DBA0561C28F96D0052D375 /* pages@2x.png */,
+				97DBA0571C28F96D0052D375 /* pdf@2x.png */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -193,8 +216,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				97DB9FF91C278F8E0052D375 /* LaunchScreen.storyboard in Resources */,
+				97DBA05C1C28F96D0052D375 /* pdf@2x.png in Resources */,
 				97DB9FF61C278F8E0052D375 /* Assets.xcassets in Resources */,
+				97DBA05B1C28F96D0052D375 /* pages@2x.png in Resources */,
 				97DB9FF41C278F8E0052D375 /* Main.storyboard in Resources */,
+				97DBA0591C28F96D0052D375 /* offline_files.png in Resources */,
+				97DBA0581C28F96D0052D375 /* numbers@2x.png in Resources */,
+				97DBA05A1C28F96D0052D375 /* ok.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +388,7 @@
 				97DB9FFF1C278F8E0052D375 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

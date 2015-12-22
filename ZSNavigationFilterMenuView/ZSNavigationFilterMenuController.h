@@ -18,12 +18,13 @@
 
 @interface ZSNavigationFilterMenuController : UITableViewController
 
-@property (nonatomic, retain) NSArray *items;
+@property (nonatomic, retain) NSArray *titleItems;
+@property (nonatomic, retain) NSArray *iconItems;
 @property (nonatomic, assign) NSInteger selectRow;
 @property (nonatomic, retain) UIView *backgroundView;
 @property (nonatomic, unsafe_unretained) id<ZSPullDownMenuDelegate> menuDelegate;
 
-- (instancetype)initWithItems:(NSArray *)items;
+- (instancetype)initWithTitleItems:(NSArray *)titles iconItems:(NSArray *)icons;
 
 - (void)show:(BOOL)enable animated:(BOOL)animate;
 

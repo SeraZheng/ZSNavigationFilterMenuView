@@ -24,12 +24,14 @@
 
 @implementation ZSNavigationFilterMenuController
 
-- (instancetype)initWithItems:(NSArray *)items
+- (instancetype)initWithTitleItems:(NSArray *)titles iconItems:(NSArray *)icons
 {
     if (self = [super init]) {
-        _items = items;
+        _titleItems = titles;
+        _iconItems = icons;
+        
         _backgroundView = [[UIView alloc] initWithFrame:ZSScreenBounds()];
-        _backgroundView.backgroundColor = [UIColor whiteColor];
+        _backgroundView.backgroundColor = ZSSTYLEVAR(backgroundViewColor);
         _backgroundView.alpha = 0.f;
         [_backgroundView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBack:)]];
     }
@@ -38,7 +40,7 @@
 
 - (void)loadView
 {
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZSScreenHeight(), ZSScreenWidth(), (_items.count + 1) * Row_Height)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, ZSScreenHeight(), ZSScreenWidth(), (_titleItems.count + 1) * Row_Height)];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -102,11 +104,28 @@
     [self show:NO animated:YES];
 }
 
+- (UIImage*)scaleImage:(UIImage*)image
+{
+    CGSize size = image.size;
+    if (size.height > Row_Height - 20) {
+        CGFloat scale = (Row_Height - 20) / size.height;
+        size = CGSizeMake(Row_Height - 20, size.width * scale);
+        
+        UIGraphicsBeginImageContext(size);
+        [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+        UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        return scaledImage;
+    }
+    return image;
+}
+
 #pragma mark -
 #pragma mark Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _items.count + 1;
+    return _titleItems.count + 1;
 }
 
 
@@ -119,10 +138,20 @@
         cell = [[ZSNavigationFilterMenuCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     
-    if ([indexPath row] == _items.count) {
+    if ([indexPath row] == _titleItems.count) {
         [cell.textLabel setText:NSLocalizedString(@"Cancel", @"")];
+        [cell.textLabel setTextAlignment:NSTextAlignmentCenter];
     } else {
-        [cell.textLabel setText:[_items objectAtIndex:[indexPath row]]];
+        NSString *title = [_titleItems objectAtIndex:[indexPath row]];
+        NSAssert([title isKindOfClass:[NSString class]], @"title must be kind of NSString");
+        [cell.textLabel setText:title];
+    }
+    
+    if (_iconItems && [indexPath row] != _titleItems.count) {
+        
+        UIImage *image = [_iconItems objectAtIndex:[indexPath row]];
+        NSAssert([image isKindOfClass:[UIImage class]], @"icon must be kind of UIImage");
+        cell.imageView.image = [self scaleImage:image];
     }
     
     return cell;
@@ -140,7 +169,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([indexPath row] != _items.count) {
+    if ([indexPath row] != _titleItems.count) {
         self.selectRow = [indexPath row];
         
         if ([self.menuDelegate respondsToSelector:@selector(pullDownMenuDidChangeToRow:)]) {

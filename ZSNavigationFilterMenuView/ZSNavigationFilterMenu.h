@@ -23,6 +23,11 @@
 @property (nonatomic, retain) NSArray *titleItems;
 
 /**
+ *  @brief all icon menus
+ */
+@property (nonatomic, retain, readonly) NSArray *iconItems;
+
+/**
  *  @brief default title attributes for UIControlStateNormal
  */
 @property (nonatomic, retain) NSDictionary *defaultAttributes;
@@ -52,6 +57,6 @@
  */
 @property (nonatomic, copy) void (^changeTitleCompletion)(NSString *title, NSInteger row);
 
-- (instancetype)initWithTitle:(NSString *)title;
+- (instancetype)initWithTitleItems:(NSArray *)titles iconItems:(NSArray *)icons;
 
 @end

@@ -18,7 +18,6 @@
 @interface ZSNavigationFilterMenu ()
 
 @property (nonatomic, retain) UIImage *downIcon;
-@property (nonatomic, retain) UIImage *upIcon;
 
 @end
 
@@ -46,23 +45,26 @@
             defaults;
         });
         
-        _selectRow = 0;
         _maxSize = CGSizeMake(200, 40);
         
+        [self setImage:self.downIcon forState:UIControlStateNormal];
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(0, - Image_Width, 0, 0)];
         self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [self addTarget:self action:@selector(filterTitleTap) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
 
-- (instancetype)initWithTitle:(NSString *)title
+- (instancetype)initWithTitleItems:(NSArray *)titles iconItems:(NSArray *)icons
 {
+    if (icons) {
+        NSAssert(icons.count == titles.count, @"icons' count must be equal to titles' count");
+    }
+    
     if (self = [self init]) {
-        [self setTitle:title forState:UIControlStateNormal];
-        [self setTitle:title forState:UIControlStateHighlighted];
-        
-        [self setImage:self.downIcon forState:UIControlStateNormal];
-        [self setTitleEdgeInsets:UIEdgeInsetsMake(0, - Image_Width, 0, 0)];
+        _titleItems = titles;
+        _iconItems = icons;
+        self.selectRow = 0;
     }
     return self;
 }
@@ -82,8 +84,7 @@
     
     CGSize size = [attributedTitle boundingRectWithSize:self.maxSize options:NSStringDrawingTruncatesLastVisibleLine context:nil].size;
     [self setSize:size];
-//    [self setImageEdgeInsets:UIEdgeInsetsMake(Image_Height/2 - size.height/2 , size.width - kSpace, 0, 0)];
-     [self setImageEdgeInsets:UIEdgeInsetsMake(0 , size.width - kSpace + 2, 0, 0)];
+    [self setImageEdgeInsets:UIEdgeInsetsMake(0 , size.width - kSpace + 2, 0, 0)];
 }
 
 - (void)filterTitleTap
@@ -103,7 +104,7 @@
     _titleItems = titleItems;
 
     if (self.shouldReload && _pullMenuController) {
-        _pullMenuController.items = _titleItems;
+        _pullMenuController.titleItems = _titleItems;
         [_pullMenuController.tableView reloadData];
     }
 }
@@ -111,6 +112,9 @@
 - (void)setSelectRow:(NSInteger)selectRow
 {
     _selectRow = selectRow;
+    
+    [self setTitle:[self.titleItems objectAtIndex:selectRow] forState:UIControlStateNormal];
+    [self setTitle:[self.titleItems objectAtIndex:selectRow] forState:UIControlStateHighlighted];
     
     if (_pullMenuController) {
         _pullMenuController.selectRow = selectRow;
@@ -123,9 +127,9 @@
 - (ZSNavigationFilterMenuController *)pullMenuController
 {
     if (!_pullMenuController) {
-        NSAssert(self.titleItems.count < 6, @"the count of title items must be less than 6");
+        NSAssert(self.titleItems.count < 10, @"the count of title items must be less than 10");
         
-        _pullMenuController = [[ZSNavigationFilterMenuController alloc] initWithItems:self.titleItems];
+        _pullMenuController = [[ZSNavigationFilterMenuController alloc] initWithTitleItems:self.titleItems iconItems:self.iconItems];
         _pullMenuController.menuDelegate = self;
         _pullMenuController.selectRow = _selectRow;
     }
@@ -144,8 +148,7 @@
 
 - (void)pullDownMenuDidChangeToRow:(NSInteger)row
 {
-    _selectRow = row;
-    [self setTitle:[self.titleItems objectAtIndex:row] forState:UIControlStateNormal];
+    self.selectRow = row;
     
     if (NULL != self.changeTitleCompletion) {
         _changeTitleCompletion([self.titleItems objectAtIndex:row], row);
@@ -162,8 +165,8 @@
         UIGraphicsBeginImageContext(size);
         
         CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetRGBStrokeColor(context, 255, 255, 255, 1);
-        CGContextSetLineWidth(context, 2.f);
+        CGContextSetStrokeColorWithColor(context, [ZSSTYLEVAR(strokeLineColor) CGColor]);
+        CGContextSetLineWidth(context, ZSSTYLEVAR(strokeWidth));
         
         CGContextMoveToPoint(context, kSpace, kSpace);
         CGContextAddLineToPoint(context, Image_Width/2, Image_Width - kSpace);

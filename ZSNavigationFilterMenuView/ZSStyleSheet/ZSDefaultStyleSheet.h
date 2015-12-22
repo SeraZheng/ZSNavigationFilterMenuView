@@ -11,14 +11,29 @@
 
 @interface ZSDefaultStyleSheet : ZSStyleSheet
 
-//cell color
-- (UIColor*)cellBackgroundColor;
-- (UIColor*)bodyViewHighlightedColor;
+//title icon style
+- (UIColor*)strokeLineColor;
+- (CGFloat)strokeWidth;
 
-//text label
+//cell style
+- (UIColor*)cellBackgroundColor;
+- (UIColor*)bodyViewColor;
+- (UIColor*)bodyViewHighlightedColor;
+- (UIColor*)bodyViewBorderColor;
+- (CGFloat)bodyViewBorderWidth;
+- (CGFloat)bodyViewCornerRadius;
+
+//text label style
 - (UIFont*)textFont;
 - (UIColor*)textDefaultColor;
 - (UIColor*)textHighlightedColor;
+- (NSTextAlignment)textLabelAlignment;
 
+//background view style
+- (UIColor*)backgroundViewColor;
+
+// check view style
+- (UIColor*)checkViewColor;
+- (CGFloat)checkViewWidth;
 
 @end
